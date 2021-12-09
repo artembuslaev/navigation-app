@@ -14,5 +14,7 @@ namespace NavigationApi.DataBase.Models
 		[MaxLength(50)]
 		[Required]
 		public string Name { get; set; }
+
+		public int Length { get; set; }
 	}
 }
