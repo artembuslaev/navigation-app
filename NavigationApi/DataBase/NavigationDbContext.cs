@@ -32,6 +32,38 @@ namespace NavigationApi.DataBase
                 .HasConversion(
                     v => v.ToString(),
                     v => (PolicemanMood)Enum.Parse(typeof(PolicemanMood), v));
+            modelBuilder.Entity<Street>().HasData(
+                new Street
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ул. Гагарина",
+                    Length = 5000
+                },
+                new Street
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ул. Пушкина",
+                    Length = 1000
+                },
+                new Street
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ул. Солнечная",
+                    Length = 3000
+                },
+                new Street
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ул. Аминева",
+                    Length = 4000
+                },
+                new Street
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ул. Ново-садовая",
+                    Length = 4000
+                }
+            );
         }
     }
 }

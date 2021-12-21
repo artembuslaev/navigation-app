@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NavigationApi.DataBase;
 using NavigationApi.DataBase.Models;
+using NavigationApi.DtoModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace NavigationApi.Controllers
 {
@@ -23,14 +22,26 @@ namespace NavigationApi.Controllers
 		/// </summary>
 		/// <returns>Названия улиц.</returns>
 		[HttpGet]
-		public Street[] GetAllStreets()
+		public object GetAllStreetsForTable()
 		{
-			return _dbContext.Streets.ToArray();
+			return new
+			{
+				Items = _dbContext.Streets.ToArray()
+			};
 		}
 
+		/// <summary>
+		/// Добавить улицу.
+		/// </summary>
+		/// <param name="streetToAdd">Улица для добавления.</param>
 		[HttpPost]
 		public void AddStreet([FromBody] Street streetToAdd)
 		{
+			if (streetToAdd == null)
+			{
+				return;
+			}
+
 			streetToAdd.Id = Guid.NewGuid();
 			_dbContext.Streets.Add(streetToAdd);
 			_dbContext.SaveChanges();
@@ -39,10 +50,30 @@ namespace NavigationApi.Controllers
 		[HttpPost]
 		public void UpdateStreet([FromBody] Street street)
 		{
+			if (street == null || street.Id == Guid.Empty)
+			{
+				return;
+			}
+
 			var streetToUpdate = _dbContext.Streets.Find(street.Id);
 			streetToUpdate.Length = street.Length;
 			streetToUpdate.Name = street.Name;
 			_dbContext.SaveChanges();
+		}
+
+		[HttpDelete]
+		public void DeleteStreet([FromBody] TransferIdObject to)
+		{
+			if (to == null || to.Id == Guid.Empty)
+			{
+				return;
+			}
+
+			_dbContext.Streets.Remove(
+				_dbContext.Streets.First(x => x.Id == to.Id)
+				);
+			_dbContext.SaveChanges();
+			return;
 		}
 	}
 }
