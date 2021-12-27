@@ -36,7 +36,7 @@ namespace NavigationApi
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+			app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "http://109.124.238.76:4200")
 								.AllowAnyHeader()
 								.AllowAnyMethod()
 								.AllowCredentials());

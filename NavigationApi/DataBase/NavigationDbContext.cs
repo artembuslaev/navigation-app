@@ -32,6 +32,32 @@ namespace NavigationApi.DataBase
                 .HasConversion(
                     v => v.ToString(),
                     v => (PolicemanMood)Enum.Parse(typeof(PolicemanMood), v));
+
+            modelBuilder
+                .Entity<Car>()
+                .HasIndex(p => p.Mark)
+                .IsUnique();
+
+            modelBuilder
+               .Entity<Driver>()
+               .HasIndex(p => p.FullName)
+               .IsUnique();
+
+            modelBuilder
+               .Entity<Fuel>()
+               .HasIndex(p => p.Name)
+               .IsUnique();
+
+            modelBuilder
+               .Entity<RoadType>()
+               .HasIndex(p => p.Name)
+               .IsUnique();
+
+            modelBuilder
+               .Entity<Street>()
+               .HasIndex(p => p.Name)
+               .IsUnique();
+
             modelBuilder.Entity<Street>().HasData(
                 new Street
                 {
